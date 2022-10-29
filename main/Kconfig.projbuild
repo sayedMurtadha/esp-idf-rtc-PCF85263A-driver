@@ -8,6 +8,13 @@ menu "app_main Configuration"
         default 14
         help
             GPIO pin number to be used as GPIO_OUTPUT_IO_LED.
+
+    config GPIO_INPUT_SWITCH
+        int "GPIO input pin 13"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 13
+        help
+            GPIO pin number to be used as GPIO_INPUT_SWITCH.
     
     config ROT_ENC_A_GPIO
         int "Rotary Encoder A output GPIO number"

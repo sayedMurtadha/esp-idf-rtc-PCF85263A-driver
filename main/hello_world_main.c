@@ -21,8 +21,11 @@
 #define EXAMPLE_PCNT_HIGH_LIMIT 100
 #define EXAMPLE_PCNT_LOW_LIMIT  -100
 
-#define GPIO_OUTPUT_IO_0    CONFIG_GPIO_OUTPUT_LED
-#define GPIO_OUTPUT_PIN_SEL  (1ULL<<GPIO_OUTPUT_IO_0) 
+#define GPIO_OUTPUT_LED    CONFIG_GPIO_OUTPUT_LED
+#define GPIO_OUTPUT_PIN_SEL  (1ULL<<GPIO_OUTPUT_LED) 
+
+#define GPIO_INPUT_SWITCH    CONFIG_GPIO_INPUT_SWITCH
+#define GPIO_INPUT_PIN_SEL  (1ULL<<GPIO_INPUT_SWITCH) 
 
 
 #define EXAMPLE_EC11_GPIO_A CONFIG_ROT_ENC_A_GPIO
@@ -55,6 +58,15 @@ void app_main(void)
     //disable pull-up mode
     io_conf.pull_up_en = 0;
     //configure GPIO with the given settings
+    gpio_config(&io_conf);
+
+
+    //bit mask of the pins, use GPIO4/5 here
+    io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
+    //set as input mode
+    io_conf.mode = GPIO_MODE_INPUT;
+    //enable pull-up mode
+    io_conf.pull_up_en = 1;
     gpio_config(&io_conf);
 
 pcnt_unit_config_t unit_config = {
@@ -124,8 +136,11 @@ pcnt_unit_config_t unit_config = {
         }
 
 
+        printf("Switch val: %d\n", gpio_get_level(GPIO_INPUT_SWITCH));
+
+
         printf("Blinking...\n");
-        gpio_set_level(GPIO_OUTPUT_IO_0, i);
+        gpio_set_level(GPIO_OUTPUT_LED, i);
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 
