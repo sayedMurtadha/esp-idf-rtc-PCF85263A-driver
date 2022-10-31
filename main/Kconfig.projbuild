@@ -9,6 +9,13 @@ menu "app_main Configuration"
         help
             GPIO pin number to be used as GPIO_OUTPUT_IO_LED.
 
+    config GPIO_INPUT_PUSH_BUTTON
+        int "GPIO input pin 13"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 12
+        help
+            GPIO pin number to be used as GPIO_INPUT_PUSH_BUTTON.
+
     config GPIO_INPUT_SWITCH
         int "GPIO input pin 13"
         range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX

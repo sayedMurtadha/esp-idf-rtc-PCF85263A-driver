@@ -2,6 +2,7 @@
 #include "sdkconfig.h"
 #include "driver/gpio.h"
 #include "encoder.h"
+#include "push_button.h"
 
 #define LED_PIN_SEL  (1ULL<<CONFIG_GPIO_OUTPUT_LED)
 #define SWITCH_PIN_SEL  (1ULL<<CONFIG_GPIO_INPUT_SWITCH)
@@ -23,6 +24,8 @@ static void gpio_init(uint64_t bit_mask, gpio_mode_t mode, gpio_pulldown_t pulld
 
 void io_init(void)
 {
+    /* Push Button Setup */
+    push_button_init();
     
     /* LED Setup */
     gpio_init(LED_PIN_SEL, GPIO_MODE_OUTPUT, GPIO_PULLDOWN_DISABLE, GPIO_PULLUP_DISABLE, GPIO_INTR_DISABLE);
