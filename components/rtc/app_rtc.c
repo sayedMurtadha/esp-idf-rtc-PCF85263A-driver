@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "rtc.h"
+#include "app_rtc.h"
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
