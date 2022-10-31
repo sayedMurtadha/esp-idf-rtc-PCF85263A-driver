@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include "esp_err.h"
 
+#define ENCODER_PCNT_HIGH_LIMIT 100
+#define ENCODER_PCNT_LOW_LIMIT  -100
+
 void encoder_init(void);
 
 bool get_encoder_updated_value(int* buffer, uint32_t timeout_ms);

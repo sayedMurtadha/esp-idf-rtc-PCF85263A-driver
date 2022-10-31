@@ -11,8 +11,6 @@
 #include "driver/pulse_cnt.h"
 
 
-#define ENCODER_PCNT_HIGH_LIMIT 100
-#define ENCODER_PCNT_LOW_LIMIT  -100
 #define QUEUE_LENGTH 10
 
 #ifdef DEBUG
