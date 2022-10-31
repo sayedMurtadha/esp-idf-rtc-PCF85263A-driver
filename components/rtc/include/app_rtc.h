@@ -8,7 +8,7 @@ typedef enum{
     RUNNING_MODE_EDIT
 }rtc_running_mode_t;
 
-void rtc_init(void);
+void app_rtc_init(void);
 
 #endif // !APP_RTC_H
 
