@@ -8,7 +8,7 @@
 #define I2C_MAX_FREQ_HZ     400000
 
 /* TODO: add return error code */
-typedef void (*i2c_reader_t)(uint8_t read_address, const uint8_t * read_buffer, size_t read_size);
+typedef void (*i2c_reader_t)(uint8_t read_address, uint8_t * read_buffer, size_t read_size);
 typedef void (*i2c_writer_t)(uint8_t write_address, const uint8_t * write_buffer, size_t write_size);
 
 typedef enum 

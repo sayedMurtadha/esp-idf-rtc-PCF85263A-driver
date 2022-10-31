@@ -94,7 +94,7 @@ static pcf85263_err_t set_register(uint8_t address, uint8_t value){
 static pcf85263_err_t get_register(uint8_t address, uint8_t* value){
     pcf85263_err_t err = reader_writer_check();
     if(err == PCF85263_ERR_NONE){
-        reader_invoker(address, &value, sizeof(value));
+        reader_invoker(address, value, sizeof(value));
     }
 
     return err;
@@ -137,7 +137,7 @@ pcf85263_err_t get_pcf85263_time(pcf85263_time_t* time){
 
 pcf85263_err_t set_pcf85263_time(pcf85263_time_t* time){
     pcf85263_time_t packed_time = pack_time(*time);
-    return set_data(PCF85263_TIME_REG_START_ADDR, &packed_time, PCF85263_TIME_REG_ADDR_LENGTH);
+    return set_data(PCF85263_TIME_REG_START_ADDR, (uint8_t*)&packed_time, PCF85263_TIME_REG_ADDR_LENGTH);
 }
 
 pcf85263_err_t get_pcf85263_date(pcf85263_date_t* date){
@@ -151,7 +151,7 @@ pcf85263_err_t get_pcf85263_date(pcf85263_date_t* date){
 
 pcf85263_err_t set_pcf85263_date(pcf85263_date_t* date){
     pcf85263_date_t packed_date = pack_date(*date);
-    return set_data(PCF85263_DATE_REG_START_ADDR, &packed_date, PCF85263_DATE_REG_ADDR_LENGTH);
+    return set_data(PCF85263_DATE_REG_START_ADDR, (uint8_t*)&packed_date, PCF85263_DATE_REG_ADDR_LENGTH);
 }
 
 
@@ -166,7 +166,7 @@ pcf85263_err_t get_pcf85263_datetime(pcf85263_datetime_t* dt){
 
 pcf85263_err_t set_pcf85263_datetime(pcf85263_datetime_t* dt){
     pcf85263_datetime_t packed_datetime = pack_datetime(*dt);
-    return set_data(PCF85263_TIME_REG_START_ADDR, &packed_datetime, PCF85263_DATETIME_REG_ADDR_LENGTH);
+    return set_data(PCF85263_TIME_REG_START_ADDR, (uint8_t*)&packed_datetime, PCF85263_DATETIME_REG_ADDR_LENGTH);
 }
 
 
