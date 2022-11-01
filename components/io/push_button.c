@@ -10,12 +10,16 @@
 #define GPIO_INPUT_PIN_SEL  (1ULL<<CONFIG_GPIO_INPUT_PUSH_BUTTON)
 #define ESP_INTR_FLAG_DEFAULT 0
 
+#define DEBOUNCE_PRESET_MS 250
+
 static QueueHandle_t gpio_evt_queue = NULL;
 
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+    if(gpio_num == CONFIG_GPIO_INPUT_PUSH_BUTTON){
+        xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+    }
 }
 
 static void button_pushed(void* arg)
@@ -23,6 +27,10 @@ static void button_pushed(void* arg)
     uint32_t io_num;
     for(;;) {
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
+
+            /* Debouncing Wait */
+            vTaskDelay(DEBOUNCE_PRESET_MS / portTICK_PERIOD_MS);
+            printf("Button is pushed");
             xQueueReset(gpio_evt_queue);
             xTaskNotifyGive(get_rtc_task_handle());
         }
