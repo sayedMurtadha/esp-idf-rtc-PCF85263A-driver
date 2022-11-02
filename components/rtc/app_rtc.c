@@ -17,7 +17,7 @@ static void (*running_mode_function)(void) = &rtc_mode_monitor;
 
 void app_rtc_task(void *pvParameter);
 
-typedef void (*rtc_add_function_t)(pcf85263_datetime_t*, uint8_t);
+typedef void (*rtc_add_function_t)(pcf85263_datetime_t*, int);
 
 #define ADD_FUNCTIONS_COUNT 6
 rtc_add_function_t add_functions[ADD_FUNCTIONS_COUNT] = {
@@ -39,7 +39,7 @@ static void rtc_mode_edit(void){
     static pcf85263_datetime_t dt;
     static console_update_location_t location = UPDATE_LOCATION_HOURS;
     static uint32_t led_count = 0;
-    static int event_count, pulse_count;
+    static int current_count = 0, last_count = 0;
     if(rtc_mode_edit_init){
         ESP_ERROR_CHECK(set_pcf85263_mode_off());
         ESP_ERROR_CHECK(get_pcf85263_datetime(&dt));
@@ -54,20 +54,20 @@ static void rtc_mode_edit(void){
         rtc_mode_edit_init = false;
     }
 
-    /* wait for queue data... */
+    /* wait for button queue data */
     if(ulTaskNotifyTake(pdTRUE, 0)){
         set_update_location_next(&location);
         update_datetime(&dt, location);
     }
 
-    if (get_encoder_updated_value(&event_count, 100)) {
-        printf("Encoder update: %d ", (event_count - pulse_count));
-        add_functions[location](&dt, (event_count - pulse_count)); /* TODO: to fix pecision */
-    } else {
-        ESP_ERROR_CHECK(get_encoder_current_value(&pulse_count));
-    }
-
-
+    /* Read encoder and update values */
+    ESP_ERROR_CHECK(get_encoder_current_value(&current_count));
+    if (current_count != last_count) {
+        printf("Encoder value: %d \n", current_count);
+        add_functions[location](&dt, (current_count - last_count) / 2); /* TODO: to fix pecision */
+        last_count = current_count;
+        update_datetime(&dt, location);
+    } 
 
 
     if(rtc_mode_edit_save){

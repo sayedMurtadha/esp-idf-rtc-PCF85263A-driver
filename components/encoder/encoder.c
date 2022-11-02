@@ -64,17 +64,6 @@ void encoder_init(void){
     ESP_ERROR_CHECK(pcnt_channel_set_edge_action(pcnt_chan_b, PCNT_CHANNEL_EDGE_ACTION_INCREASE, PCNT_CHANNEL_EDGE_ACTION_DECREASE));
     ESP_ERROR_CHECK(pcnt_channel_set_level_action(pcnt_chan_b, PCNT_CHANNEL_LEVEL_ACTION_KEEP, PCNT_CHANNEL_LEVEL_ACTION_INVERSE));
 
-    DEBUG_MSG("add watch points and register callbacks");
-    int watch_points[] = {ENCODER_PCNT_LOW_LIMIT, -50, 0, 50, ENCODER_PCNT_HIGH_LIMIT};
-    for (size_t i = 0; i < sizeof(watch_points) / sizeof(watch_points[0]); i++) {
-        ESP_ERROR_CHECK(pcnt_unit_add_watch_point(encoder_pcnt_unit, watch_points[i]));
-    }
-    pcnt_event_callbacks_t cbs = {
-        .on_reach = encoder_on_reach,
-    };
-    encoder_queue = xQueueCreate(QUEUE_LENGTH, sizeof(int));
-    ESP_ERROR_CHECK(pcnt_unit_register_event_callbacks(encoder_pcnt_unit, &cbs, encoder_queue));
-
     DEBUG_MSG("enable pcnt unit");
     ESP_ERROR_CHECK(pcnt_unit_enable(encoder_pcnt_unit));
     DEBUG_MSG("clear pcnt unit");
@@ -82,10 +71,6 @@ void encoder_init(void){
     DEBUG_MSG("start pcnt unit");
     ESP_ERROR_CHECK(pcnt_unit_start(encoder_pcnt_unit));
 
-}
-
-bool get_encoder_updated_value(int* buffer, uint32_t timeout_ms){
-    return xQueueReceive(encoder_queue, &buffer, pdMS_TO_TICKS(timeout_ms)) != 0;
 
 }
 
