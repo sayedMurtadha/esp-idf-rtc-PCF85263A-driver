@@ -57,8 +57,6 @@ void rtc_date_add_years(pcf85263_datetime_t* datetime, int years){
  */
 void rtc_register_read(uint8_t reg_addr, uint8_t *data, size_t len){
     i2c_master_write_read_device(I2C_MASTER_NUM, get_pcf85263_device_address(), &reg_addr, 1, data, len, I2C_MASTER_TIMEOUT_TICKS);
-    // i2c_master_write_to_device(I2C_MASTER_NUM, get_pcf85263_device_address(), &reg_addr, 1, I2C_MASTER_TIMEOUT_TICKS);
-    // i2c_master_read_from_device(I2C_MASTER_NUM, get_pcf85263_device_address(), data, len, I2C_MASTER_TIMEOUT_TICKS);
 }
 
 /* Overridden write function to support the rtc write */
