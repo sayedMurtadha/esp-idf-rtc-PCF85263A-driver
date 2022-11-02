@@ -183,7 +183,7 @@ pcf85263_err_t pcf85263_init(i2c_reader_t reader, i2c_writer_t writer){
 
     if(err == PCF85263_ERR_NONE){
         reg_value &= PCF85263_RTCM_BITMASK;
-        err = set_register(PCF85263_CHIP_CTRL_REG_ADDR, &reg_value);
+        err = set_register(PCF85263_CHIP_CTRL_REG_ADDR, reg_value);
     }
 
     if(err == PCF85263_ERR_NONE){
