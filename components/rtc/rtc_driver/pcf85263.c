@@ -85,7 +85,7 @@ static pcf85263_err_t reader_writer_check(void){
 static pcf85263_err_t set_register(uint8_t address, uint8_t value){
     pcf85263_err_t err = reader_writer_check();
     if(err == PCF85263_ERR_NONE){
-        writer_invoker(address, &value, sizeof(value));
+        writer_invoker(address, &value, sizeof(uint8_t));
     }
 
     return err;
@@ -119,11 +119,11 @@ static pcf85263_err_t get_data(uint8_t start_address, uint8_t* buffer, size_t bu
 }
 
 pcf85263_err_t set_pcf85263_mode_on(void){
-    return set_register(PCF85263_STOP_REG_ADDR, 0x01);
+    return set_register(PCF85263_STOP_REG_ADDR, 0x00);
 
 }
 pcf85263_err_t set_pcf85263_mode_off(void){
-    return set_register(PCF85263_STOP_REG_ADDR, 0x00);
+    return set_register(PCF85263_STOP_REG_ADDR, 0x01);
 }
 
 pcf85263_err_t get_pcf85263_time(pcf85263_time_t* time){
@@ -177,7 +177,7 @@ pcf85263_err_t pcf85263_init(i2c_reader_t reader, i2c_writer_t writer){
         reader_invoker = reader;
         writer_invoker = writer;
 
-        
+
         err = get_register(PCF85263_CHIP_CTRL_REG_ADDR, &reg_value);
     }
 
