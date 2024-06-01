@@ -1,0 +1,2 @@
+idf_component_register(SRCS "rtc_wrapper.c" "app_rtc.c" "rtc_driver/pcf85263.c" "console_interface.c"
+    PRIV_REQUIRES io driver freertos encoder INCLUDE_DIRS include PRIV_INCLUDE_DIRS rtc_driver/include)

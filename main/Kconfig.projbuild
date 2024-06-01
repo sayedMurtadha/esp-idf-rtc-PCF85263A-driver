@@ -1,0 +1,56 @@
+menu "app_main Configuration"
+
+    orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
+    
+    config GPIO_OUTPUT_LED
+        int "GPIO output pin 14"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 14
+        help
+            GPIO pin number to be used as GPIO_OUTPUT_IO_LED.
+
+    config GPIO_INPUT_PUSH_BUTTON
+        int "GPIO input pin 12"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 12
+        help
+            GPIO pin number to be used as GPIO_INPUT_PUSH_BUTTON.
+
+    config GPIO_INPUT_SWITCH
+        int "GPIO input pin 13"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 13
+        help
+            GPIO pin number to be used as GPIO_INPUT_SWITCH.
+    
+    config ROT_ENC_A_GPIO
+        int "Rotary Encoder A output GPIO number"
+        range 0 39
+        default 34
+        help
+            GPIO number (IOxx) from which to sample the Rotary Encoder 'A' output.
+    
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used.
+    
+    config ROT_ENC_B_GPIO
+        int "Rotary Encoder B output GPIO number"
+        range 0 39
+        default 17
+        help
+            GPIO number (IOxx) from which to sample the Rotary Encoder 'B' output.
+    
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used.
+      
+    config I2C_MASTER_SCL
+        int "SCL GPIO Num"
+        default 22
+        help
+            GPIO number for I2C Master clock line.
+
+    config I2C_MASTER_SDA
+        int "SDA GPIO Num"
+        default 21
+        help
+            GPIO number for I2C Master data line.
+    
+    endmenu

@@ -1,4 +1,4 @@
-idf_component_register(SRCS "hello_world_main.c"
-                    INCLUDE_DIRS "")
+set(COMPONENT_SRCDIRS ".")
+set(COMPONENT_ADD_INCLUDEDIRS ".")
 
-target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
+register_component()
